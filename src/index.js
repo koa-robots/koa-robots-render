@@ -7,12 +7,17 @@ export default function(root = '.', options = {}, cache){
     options = Object.assign({
         max : 100,
         cache : true,
+        helpers : null,
         index : '/index'
     }, options)
 
     cache = LRU(options.max)
     template.config('cache', false)
     template.config('base', root = normalize(resolve(root)))
+
+    for(let key in options.helpers){
+        template.helper(key, options.helpers[key])
+    }
 
     return function *(next){
         yield next

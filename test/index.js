@@ -132,4 +132,25 @@ describe('render', () => {
             })
         })
     })
+
+    it('helper', (done) => {
+        var app = koa()
+
+        app.use(render('./test/html', {
+            helpers : {
+                upper(str) {
+                    return str.toUpperCase()
+                }
+            }
+        }))
+        app.use(function *(next){
+            this.body = {
+                value : 'abc'
+            }
+        })
+
+        request(app.listen())
+            .get('/helper')
+            .expect('ABC', done)
+    })
 })

@@ -12,12 +12,17 @@ exports.default = function () {
     options = Object.assign({
         max: 100,
         cache: true,
+        helpers: null,
         index: '/index'
     }, options);
 
     cache = (0, _lruCache2.default)(options.max);
     _artTemplate2.default.config('cache', false);
     _artTemplate2.default.config('base', root = (0, _path.normalize)((0, _path.resolve)(root)));
+
+    for (let key in options.helpers) {
+        _artTemplate2.default.helper(key, options.helpers[key]);
+    }
 
     return function* (next) {
         yield next;
