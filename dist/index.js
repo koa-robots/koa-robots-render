@@ -36,7 +36,7 @@ exports.default = function () {
                 }
 
                 this.type = 'html';
-                this.body = yield render(cache, path, this.body, this.globalData);
+                this.body = yield render(cache, path, this.body, this.state.renderData);
             }
         } catch (err) {
             if (~['ENOENT', 'ENAMETOOLONG', 'ENOTDIR'].indexOf(err.code)) {
@@ -63,7 +63,7 @@ var _path = require('path');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function* render(cache, path, data) {
-    let defaultData = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
+    let renderData = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
 
     let compile = cache.get(path);
 
@@ -73,8 +73,8 @@ function* render(cache, path, data) {
     }
 
     if (typeof data === 'object' && !Array.isArray(data)) {
-        return compile(Object.assign({}, defaultData, data));
+        return compile(Object.assign({}, renderData, data));
     } else {
-        return compile(defaultData);
+        return compile(renderData);
     }
 }

@@ -31,7 +31,7 @@ export default function(root = '.', options = {}, cache){
                 }
 
                 this.type = 'html'
-                this.body = yield render(cache, path, this.body, this.globalData)
+                this.body = yield render(cache, path, this.body, this.state.renderData)
             }
         }catch(err){
             if (~['ENOENT', 'ENAMETOOLONG', 'ENOTDIR'].indexOf(err.code)){
@@ -41,7 +41,7 @@ export default function(root = '.', options = {}, cache){
     }
 }
 
-function *render(cache, path, data, defaultData = {}){
+function *render(cache, path, data, renderData = {}){
     let compile = cache.get(path)
 
     if(!compile){
@@ -50,8 +50,8 @@ function *render(cache, path, data, defaultData = {}){
     }
 
     if(typeof data === 'object' && !Array.isArray(data)){
-        return compile(Object.assign({}, defaultData, data))
+        return compile(Object.assign({}, renderData, data))
     }else{
-        return compile(defaultData)
+        return compile(renderData)
     }
 }
