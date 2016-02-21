@@ -14,7 +14,7 @@ describe('render', () => {
         app.use(function *(next){
             switch (this.path) {
                 case '/':
-                    this.globalData = {index : 1}
+                    this.state.renderData = {index : 1}
                     break
                 case '/data':
                     this.body = {'result' : 'hello world'}

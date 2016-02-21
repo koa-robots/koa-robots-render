@@ -1,6 +1,6 @@
 {
   "name": "koa-robots-render",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "koa-robots-render",
   "author": "寒飞紫",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "lru-cache": "^4.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.5.1",
     "babel-core": "^6.4.0",
     "babel-plugin-transform-es2015-destructuring": "^6.4.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.3.16",
@@ -21,6 +22,7 @@
     "babel-plugin-transform-es2015-spread": "^6.4.0",
     "co": "^4.6.0",
     "koa": "^1.1.2",
+    "mocha": "^2.4.5",
     "supertest": "1.1.0"
   },
   "babel": {
@@ -32,9 +34,9 @@
     ]
   },
   "scripts": {
-    "compile": "babel src -d dist",
+    "compile": "node_modules/.bin/babel src -d dist",
     "prepublish": "npm run compile",
-    "test": "npm run compile && mocha --reporter spec --compilers js:babel-core/register"
+    "test": "npm run compile && node_modules/.bin/mocha --reporter spec --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
