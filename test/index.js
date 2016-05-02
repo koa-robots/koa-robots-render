@@ -85,7 +85,7 @@ describe('render', () => {
             agent.get('/').expect('index2\n', function(err){
                 if(err) throw err
                 co(function *(){
-                    yield fs.writeFile(path, 'index${index}${index}')
+                    yield fs.writeFile(path, 'index<%=index%><%=index%>')
                     agent.get('/').expect('index2\n', function(err){
                         if(err) throw err
                         co(function *(){
@@ -120,7 +120,7 @@ describe('render', () => {
             agent.get('/').expect('index3\n', function(err){
                 if(err) throw err
                 co(function *(){
-                    yield fs.writeFile(path, 'index${index}${index}')
+                    yield fs.writeFile(path, 'index<%=index%><%=index%>')
                     agent.get('/').expect('index33', function(err){
                         if(err) throw err
                         co(function *(){

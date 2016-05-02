@@ -12,8 +12,8 @@ export default function(root = '.', options = {}, cache){
     }, options)
 
     cache = LRU(options.max)
-    template.config('openTag', '${')
-    template.config('closeTag', '}')
+    template.config('openTag', '<%=')
+    template.config('closeTag', '%>')
     template.config('cache', false)
     template.config('base', root = normalize(resolve(root)))
 
