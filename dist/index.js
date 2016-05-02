@@ -17,6 +17,8 @@ exports.default = function () {
     }, options);
 
     cache = (0, _lruCache2.default)(options.max);
+    _artTemplate2.default.config('openTag', '${');
+    _artTemplate2.default.config('closeTag', '}');
     _artTemplate2.default.config('cache', false);
     _artTemplate2.default.config('base', root = (0, _path.normalize)((0, _path.resolve)(root)));
 

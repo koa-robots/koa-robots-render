@@ -30,11 +30,11 @@ describe('render', () => {
 
         agent = request(app.listen())
 
-        agent.get('/').expect('index1', (err) => {
+        agent.get('/').expect('index1\n', (err) => {
             if(err) throw err
         })
 
-        agent.get('/data').expect('result : hello world', (err) => {
+        agent.get('/data').expect('result : hello world\n', (err) => {
             if(err) throw err
         })
 
@@ -42,7 +42,7 @@ describe('render', () => {
             if(err) throw err
         })
 
-        agent.get('/xss').expect('result : &#60;script&#62;xss&#60;/script&#62;result2 : <script>xss</script>', (err) => {
+        agent.get('/xss').expect('result : &#60;script&#62;xss&#60;/script&#62;result2 : <script>xss</script>\n', (err) => {
             if(err) throw err
             done()
         })
@@ -56,11 +56,11 @@ describe('render', () => {
 
         agent = request(app.listen())
 
-        agent.get('/a').expect('abc', (err) => {
+        agent.get('/a').expect('abc\n\n', (err) => {
             if(err) throw err
         })
 
-        agent.get('/b').expect('bc', (err) => {
+        agent.get('/b').expect('bc\n', (err) => {
             if(err) throw err
             done()
         })
@@ -82,11 +82,11 @@ describe('render', () => {
             content += yield fs.readFile(path)
             agent = request(app.listen())
 
-            agent.get('/').expect('index2', function(err){
+            agent.get('/').expect('index2\n', function(err){
                 if(err) throw err
                 co(function *(){
-                    yield fs.writeFile(path, 'index{{index}}{{index}}')
-                    agent.get('/').expect('index2', function(err){
+                    yield fs.writeFile(path, 'index${index}${index}')
+                    agent.get('/').expect('index2\n', function(err){
                         if(err) throw err
                         co(function *(){
                             yield fs.writeFile(path, content)
@@ -117,10 +117,10 @@ describe('render', () => {
             content += yield fs.readFile(path)
             agent = request(app.listen())
 
-            agent.get('/').expect('index3', function(err){
+            agent.get('/').expect('index3\n', function(err){
                 if(err) throw err
                 co(function *(){
-                    yield fs.writeFile(path, 'index{{index}}{{index}}')
+                    yield fs.writeFile(path, 'index${index}${index}')
                     agent.get('/').expect('index33', function(err){
                         if(err) throw err
                         co(function *(){
@@ -151,6 +151,6 @@ describe('render', () => {
 
         request(app.listen())
             .get('/helper')
-            .expect('ABC', done)
+            .expect('ABC\n', done)
     })
 })
